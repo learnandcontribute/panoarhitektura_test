@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Izdvojeno — PANO arhitektura</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main>
+  <div class="wrap">
+    <div class="pp-head">
+      <h1 class="pp-title" id="proj-title">Projekt</h1>
+      <div class="pp-right">
+        <nav class="pp-links" id="pp-links" aria-hidden="true">
+          <a href="index.html">Main</a>
+          <a href="news.html">News</a>
+          <a href="projects.html">Projekti</a>
+          <a href="objects.html">Objekti</a>
+          <a href="info.html">Info</a>
+        </nav>
+        <button class="pp-plus" id="pp-plus" aria-label="Prikaži izbornik">+</button>
+      </div>
+    </div>
+
+    <a class="backlink mono" id="proj-back" href="projects.html">← natrag</a>
+
+    <div class="proj-hero">
+      <img id="proj-hero-img" src="" alt="">
+    </div>
+
+    <div class="proj-body">
+      <div class="opis">
+        <h2>Opis</h2>
+        <p>Ovdje ide tekstualni opis projekta. Kontekst, koncept i glavne odluke — 2–3 kratka odlomka koja prate fotografije i nacrte.</p>
+        <p>Drugi odlomak opisa: materijalizacija, odnos prema okolišu i unutrašnja organizacija prostora.</p>
+      </div>
+      <dl class="meta">
+        <dt>Godište</dt><dd id="m-god"></dd>
+        <dt>Lokacija</dt><dd id="m-lok"></dd>
+        <dt>Tip</dt><dd id="m-tip"></dd>
+        <dt>Status</dt><dd id="m-sta"></dd>
+        <dt>Površina</dt><dd id="m-pov"></dd>
+        <dt>Autori</dt><dd id="m-aut"></dd>
+        <dt>Suradnici</dt><dd id="m-sur"></dd>
+      </dl>
+    </div>
+
+    <div class="slideshow">
+      <div class="eyebrow">Slideshow — fotografije i nacrti</div>
+      <div class="frame">
+        <div class="stage"><img id="slide-img" src="" alt="Fotografija projekta"></div>
+        <div class="nav">
+          <button id="slide-prev" aria-label="Prethodna">‹</button>
+          <button id="slide-next" aria-label="Sljedeća">›</button>
+        </div>
+      </div>
+      <div class="status">
+        <span id="slide-count" class="mono">01 / 01</span>
+        <span class="mono">fotografija · nacrt</span>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>© 2026 PANO arhitektura</span>
+    <span class="mono">panoarhitektura.hr</span>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
