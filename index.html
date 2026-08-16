@@ -5,38 +5,244 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PANO arhitektura</title>
 <link rel="stylesheet" href="style.css">
+<style>
+/* ================= HOMEPAGE COVER SLIDESHOW ================= */
+html,body{height:100%}
+body.cover-page{margin:0;overflow:hidden;background:#000}
+
+.hero{ position:fixed; inset:0; overflow:hidden; }
+
+.hero .slide{
+  position:absolute; inset:0; opacity:0;
+  transition:opacity 1.1s ease;
+  background-size:cover; background-position:center;
+}
+.hero .slide.on{opacity:1}
+
+.hero-logo{
+  position:absolute; top:34px; left:40px; z-index:10;
+  font-weight:600; font-size:26px; letter-spacing:.28em;
+  color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.35);
+}
+.hero-logo a{color:inherit;text-decoration:none}
+
+.hero-arrow{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:10;
+  background:none; border:0; color:#fff; font-size:44px; line-height:1;
+  cursor:pointer; padding:20px; opacity:.85;
+  text-shadow:0 1px 8px rgba(0,0,0,.4); transition:opacity .2s ease;
+  font-family:Georgia,"Times New Roman",serif;
+}
+.hero-arrow:hover{opacity:1}
+.hero-arrow.prev{left:8px}
+.hero-arrow.next{right:8px}
+
+.hero-caption{
+  position:absolute; left:40px; bottom:44px; z-index:10;
+  color:#fff; max-width:70%; text-shadow:0 1px 10px rgba(0,0,0,.45);
+}
+.hero-caption a{color:inherit;text-decoration:none}
+.hero-caption h2{
+  font-size:clamp(24px,3.4vw,40px); font-weight:600;
+  letter-spacing:.02em; text-transform:uppercase; line-height:1.05; margin:0;
+}
+.hero-caption p{
+  margin:6px 0 0; font-size:clamp(14px,1.4vw,18px); font-weight:400; opacity:.92;
+}
+
+.hero-dots{
+  position:absolute; right:40px; bottom:52px; z-index:10; display:flex; gap:10px;
+}
+.hero-dots button{
+  width:8px; height:8px; border-radius:50%; border:0; padding:0; cursor:pointer;
+  background:rgba(255,255,255,.45); transition:background .2s ease;
+}
+.hero-dots button.on{background:#fff}
+
+@media(max-width:640px){
+  .hero-logo{top:22px;left:22px;font-size:22px}
+  .hero-caption{left:22px;bottom:34px;max-width:88%}
+  .hero-dots{right:22px;bottom:40px}
+  .hero-arrow{font-size:34px;padding:12px}
+}
+
+/* ---- burger ikona ---- */
+.hero-burger{
+  position:absolute; top:34px; right:40px; z-index:10;
+  width:34px; height:26px; padding:0;
+  background:none; border:0; cursor:pointer;
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.hero-burger span{
+  display:block; height:2px; width:100%;
+  background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.4);
+}
+
+/* ---- overlay meni ---- */
+.menu-overlay{
+  position:fixed; inset:0; z-index:100;
+  background:#fafafa;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  opacity:0; visibility:hidden;
+  transition:opacity .35s ease, visibility .35s ease;
+}
+.menu-overlay.open{opacity:1; visibility:visible}
+
+.menu-logo{
+  position:absolute; top:30px; left:40px;
+  font-weight:600; font-size:26px; letter-spacing:.28em; color:#111;
+}
+.menu-close{
+  position:absolute; top:26px; right:40px;
+  background:none; border:0; cursor:pointer;
+  font-size:40px; line-height:1; color:#111; font-weight:300;
+}
+
+.menu-nav{display:flex; flex-direction:column; align-items:center; gap:2px}
+.menu-nav a{
+  color:#111; text-decoration:none;
+  font-size:clamp(30px,5vw,52px); font-weight:700; letter-spacing:.01em;
+  text-transform:uppercase; line-height:1.15;
+  transition:opacity .2s ease;
+}
+.menu-nav a:hover{opacity:.45}
+
+.menu-social{
+  position:absolute; bottom:46px;
+  display:flex; align-items:center; gap:12px;
+  font-size:16px; letter-spacing:.06em; color:#555;
+}
+.menu-social a{color:#555; text-decoration:none; transition:color .2s ease}
+.menu-social a:hover{color:#111}
+.menu-social span{color:#bbb}
+
+@media(max-width:640px){
+  .menu-logo{top:22px;left:22px;font-size:22px}
+  .menu-close{top:18px;right:22px}
+}
+</style>
 </head>
-<body class="home-page">
+<body class="cover-page">
 
-<header class="site">
-  <div class="wrap bar">
-    <a class="brand" href="index.html">PANO <small class="mono">arhitektura</small></a>
-    <nav class="main nav-right">
-      <a href="news.html">Novosti</a>
-      <a href="projects.html">Projekti</a>
-      <a href="objects.html">Objekti</a>
-      <a href="info.html">Info</a>
-    </nav>
-  </div>
-</header>
+<div class="hero" id="hero">
+  <div class="hero-logo"><a href="index.html">PANO</a></div>
 
-<main class="home">
-  <a class="cover cover-full" href="izdvojeno.html?id=p1">
-    <img src="assets/p4.webp" alt="Izdvojeni projekt — vile među borovima">
-    <div class="cover-cap">
-      <span>Vile među borovima</span>
-      <span class="mono">2025 · Izdvojeni projekt →</span>
-    </div>
+  <button class="hero-burger" id="hero-burger" aria-label="Izbornik">
+    <span></span><span></span><span></span>
+  </button>
+
+  <button class="hero-arrow prev" id="hero-prev" aria-label="Prethodna">&lsaquo;</button>
+  <button class="hero-arrow next" id="hero-next" aria-label="Sljedeca">&rsaquo;</button>
+
+  <a class="hero-caption" id="hero-caption" href="#">
+    <h2 id="hero-title"></h2>
+    <p id="hero-sub"></p>
   </a>
-</main>
 
-<footer class="site home-footer">
-  <div class="wrap">
-    <span>© 2026 PANO arhitektura</span>
-    <span class="mono">panoarhitektura.hr</span>
+  <div class="hero-dots" id="hero-dots"></div>
+</div>
+
+<!-- OVERLAY MENI -->
+<div class="menu-overlay" id="menu-overlay" aria-hidden="true">
+  <div class="menu-logo">PANO</div>
+  <button class="menu-close" id="menu-close" aria-label="Zatvori">&times;</button>
+
+  <nav class="menu-nav">
+    <a href="news.html">News</a>
+    <a href="projects.html">Projects</a>
+    <a href="objects.html">Objects</a>
+    <a href="info.html">Info</a>
+  </nav>
+
+  <div class="menu-social">
+    <a href="#" aria-label="Instagram">IN</a>
+    <span>/</span>
+    <a href="#" aria-label="Facebook">FB</a>
+    <span>/</span>
+    <a href="#" aria-label="LinkedIn">LI</a>
   </div>
-</footer>
+</div>
 
-<script src="site.js"></script>
+<script>
+const SLIDES = [
+  { img:"assets/p1.jpg",    title:"Kuća uz more — Volosko",     sub:"Stambeno · Volosko, Rijeka",      href:"izdvojeno.html?id=p1" },
+  { img:"assets/p2.jpg",    title:"Kuća pod crkvom",            sub:"Stambeno · Zagorje",              href:"izdvojeno.html?id=p2" },
+  { img:"assets/p4.jpg",    title:"Vile među borovima",         sub:"Izdvojeni projekt · 2025",        href:"izdvojeno.html?id=p1" },
+  { img:"assets/cover.jpg", title:"Drvena kuća u šumi",         sub:"Izdvojeni projekt · Gorski kotar", href:"izdvojeno.html?id=p3", pos:"center 22%" }
+];
+const INTERVAL = 3000;
+
+const hero = document.getElementById('hero');
+const dotsWrap = document.getElementById('hero-dots');
+const titleEl = document.getElementById('hero-title');
+const subEl = document.getElementById('hero-sub');
+const capEl = document.getElementById('hero-caption');
+
+const slideEls = SLIDES.map((s,i) => {
+  const d = document.createElement('div');
+  d.className = 'slide' + (i===0 ? ' on' : '');
+  d.style.backgroundImage = 'url("' + s.img + '")';
+  if(s.pos) d.style.backgroundPosition = s.pos;
+  hero.insertBefore(d, hero.firstChild);
+  return d;
+});
+const dotEls = SLIDES.map((s,i) => {
+  const b = document.createElement('button');
+  b.className = (i===0 ? 'on' : '');
+  b.setAttribute('aria-label', 'Slajd ' + (i+1));
+  b.addEventListener('click', () => go(i, true));
+  dotsWrap.appendChild(b);
+  return b;
+});
+
+let cur = 0, timer = null;
+
+function render(){
+  slideEls.forEach((el,i) => el.classList.toggle('on', i===cur));
+  dotEls.forEach((el,i) => el.classList.toggle('on', i===cur));
+  titleEl.textContent = SLIDES[cur].title;
+  subEl.textContent = SLIDES[cur].sub;
+  capEl.href = SLIDES[cur].href;
+}
+function go(i, manual){
+  cur = (i + SLIDES.length) % SLIDES.length;
+  render();
+  if(manual) restart();
+}
+function next(){ go(cur+1); }
+function start(){ timer = setInterval(next, INTERVAL); }
+function restart(){ clearInterval(timer); start(); }
+
+document.getElementById('hero-next').addEventListener('click', function(e){ e.preventDefault(); go(cur+1, true); });
+document.getElementById('hero-prev').addEventListener('click', function(e){ e.preventDefault(); go(cur-1, true); });
+document.addEventListener('keydown', function(e){
+  if(e.key==='ArrowRight') go(cur+1, true);
+  if(e.key==='ArrowLeft')  go(cur-1, true);
+});
+
+/* ---- burger meni ---- */
+const overlay = document.getElementById('menu-overlay');
+const burger = document.getElementById('hero-burger');
+const menuClose = document.getElementById('menu-close');
+
+function openMenu(){
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden','false');
+  clearInterval(timer);            /* pauziraj slideshow dok je meni otvoren */
+}
+function closeMenu(){
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden','true');
+  restart();                       /* nastavi slideshow */
+}
+burger.addEventListener('click', openMenu);
+menuClose.addEventListener('click', closeMenu);
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape') closeMenu();
+});
+
+render();
+start();
+</script>
 </body>
 </html>
